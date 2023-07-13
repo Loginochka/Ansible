@@ -1,0 +1,35 @@
+---
+- hosts: servers
+  become: yes
+  vars:
+    hello: Hello danil
+  tasks:
+  - name: Add motd
+    lineinfile:
+      path: /etc/motd
+      line: "{{ hello }}"
+  - name: Create directory
+    file:
+      path: ~/Apache
+      state: directory
+      owner: "{{ansible_user}}"
+      group: "{{ansible_user}}"
+      mode: 0755
+  - name: Unpacking arc
+    unarchive:
+      src: 'https://downloads.apache.org/kafka/3.5.0/kafka_2.12-3.5.0.tgz'
+      dest: ~/Apache
+      remote_src: yes
+  - name: Installation tuned
+    yum:
+      name: tuned
+      state: present
+    notify: tuned installed 
+
+  handlers:    
+  - name: tuned installed
+    service:
+      name: tuned
+      enabled: yes
+  
+

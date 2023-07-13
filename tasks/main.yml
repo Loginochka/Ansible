@@ -1,0 +1,49 @@
+---
+# tasks file for apache
+- name: Install apache
+  yum:
+    name: httpd
+    state: present
+  notify: restart apache
+
+- name: Create document root
+  file:
+    path: "/var/www/{{ http_host }}"
+    state: directory
+
+- name: Copy index test page
+  template:
+    src: "files/index.html.j2"
+    dest: "/var/www/html/index.html"
+  notify: restart apache
+
+- name: Create sites-available
+  file:
+    path: "/etc/apache2/sites-available"
+    state: directory
+  notify: restart apache
+
+- name: Set up Apache virtualhost
+  template:
+    src: "files/apache.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ http_conf }}"
+  notify: restart apache
+  when: apache_create_vhosts | bool
+
+- name: restart apache
+  service:
+    name: httpd
+    state: restarted 
+    enabled: true
+
+- name: Open 80 port for apache
+  firewalld:
+    port: 80/tcp
+    permanent: true
+    state: enabled
+
+- name: Check apache for 200 
+  uri:
+    url: http://localhost:80
+    status_code: 200
+  register: result

@@ -1,0 +1,10 @@
+<html>
+    <head>
+        <title>Welcome to {{ http_host }} !</title>
+    </head>
+    <body>
+        <h1>Success! The {{ http_host }} virtual host is working!
+            {{ ansible_processor }}  {{ ansible_memtotal_mb }} | {{ ansible_default_ipv4.address }}  {{ ansible_devices.sda.size }}
+        </h1>
+    </body>
+</html>

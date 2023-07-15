@@ -8,9 +8,9 @@ terraform {
 
 provider "yandex" {
   zone      = "ru-central1-b"
-  token     = "y0_AgAAAAAVd9HcAATuwQAAAADn2T11b6GthkG6SxWN5_bdKBXkGRhkf7Y"
-  cloud_id  = "b1g347hmvcjnnj95iqfm"
-  folder_id = "b1gmvkavm7e36jp24s8s"
+  token     = "xxx"
+  cloud_id  = "xxx"
+  folder_id = "xxx"
 }
 
 resource "yandex_compute_instance" "vm-cl1-ans" {

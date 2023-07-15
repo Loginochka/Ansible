@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: client
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/BUOB1JzsEi3va1XSPPmmczDL8oLZqFNcWcvJsIEzaxqaYgtgC90aC80+DQJybT2i0qrq4M+NDCqxWEQAVUd4078qhOc64elnV60dGYSkEGUHq0STwgo2TdMqhJeNk5AzldHR4jg9PIFHtPYFQMhXuaOcodIxSiiYnJ4Lacv9tQWwgBGi4BYdV9WfzEd7mObbEaofhOsalZsrSVEBenPYTBYjuUBCEwOO9CQtjrVx11ac0hEd0Ph8OXH/V47spcUYVksSFFGK+0eeKw3VOViQRHvkdYQL2Rw622/B2udR0u14bmdQmpDA9T491uGWkasLjKdjegV6Hy7pWOQCL9Up root@host-terra.ru-central1.internal

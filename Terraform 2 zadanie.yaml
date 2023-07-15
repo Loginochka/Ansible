@@ -1,0 +1,53 @@
+---
+- name: Nginx Installation
+  hosts: app
+  become: yes
+  become_user : root
+  tasks:
+  - name: Install epel-release
+    yum:
+      name: epel-release
+      state: present
+  - name: Install nginx
+    yum:
+      name: nginx
+      state: present
+  - name: restart nginx
+    service:
+      name: nginx
+      state: started
+      enabled: true
+  - name: Check nginx for 200
+    uri:
+      url: http://localhost:80
+      status_code: 200
+      return_content: true
+    register: result
+
+- name: Install MongoDB
+  hosts: db
+  become: yes
+  become_user: root
+  tasks:
+  - name: Add repo
+    copy:
+      src: ./mongodb-org.repo
+      dest: /etc/yum.repos.d/mongodb-org.repo
+
+  - name: Installation mongo
+    yum:
+      name: mongodb-org
+      state: present
+
+  - name: Start mongo
+    service:
+      name: mongod
+      state: started
+      enabled: true
+
+  - name: Status
+    systemd:
+      name: mongod
+    register: mongod_service_status
+  - debug:
+      var: mongod_service_status.status.ActiveState
